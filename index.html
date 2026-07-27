@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Poster companion site for Accelerated Neural System Identification via Reduced-Order Modeling.">
+    <meta name="theme-color" content="#071a35">
+    <meta property="og:title" content="Accelerated Neural System Identification">
+    <meta property="og:description" content="Poster companion: reduced-order models, hyperreduction, and simulation results.">
+    <meta property="og:image" content="Images/social-preview.png">
+    <title>Accelerated Neural System Identification</title>
+    <style>
+      :root {
+        --ink: #10233e;
+        --muted: #52657c;
+        --paper: #f7f9fc;
+        --line: #dbe3ee;
+        --blue: #1459b8;
+        --navy: #071a35;
+        --teal: #06a7a5;
+        --coral: #ef6c58;
+        --shadow: 0 18px 42px rgb(16 35 62 / 11%);
+      }
+
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        color: var(--ink);
+        background: var(--paper);
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        font-size: 17px;
+        line-height: 1.6;
+      }
+
+      a { color: inherit; }
+      img { display: block; max-width: 100%; }
+      .wrap { width: min(1120px, calc(100% - 40px)); margin-inline: auto; }
+
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        border-bottom: 1px solid rgb(255 255 255 / 13%);
+        background: rgb(7 26 53 / 94%);
+        backdrop-filter: blur(12px);
+        color: white;
+      }
+      .header-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        min-height: 60px;
+      }
+      .wordmark { font-weight: 750; font-size: .92rem; letter-spacing: .02em; text-decoration: none; }
+      nav { display: flex; gap: 18px; overflow-x: auto; white-space: nowrap; }
+      nav a { color: #dce9ff; font-size: .86rem; text-decoration: none; }
+      nav a:hover, nav a:focus-visible { color: white; text-decoration: underline; text-underline-offset: 4px; }
+
+      .hero {
+        overflow: hidden;
+        position: relative;
+        color: white;
+        background: var(--navy);
+      }
+      .hero::before {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(90deg, rgb(7 26 53 / 98%) 0%, rgb(7 26 53 / 90%) 43%, rgb(7 26 53 / 38%) 100%), url("Images/social-preview.png") center / cover;
+        content: "";
+      }
+      .hero-inner { position: relative; padding: clamp(68px, 12vw, 132px) 0 82px; }
+      .eyebrow { margin: 0 0 18px; color: #74e2dc; font-size: .78rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+      h1, h2, h3 { line-height: 1.1; }
+      h1 { max-width: 800px; margin: 0; font-size: clamp(2.45rem, 7vw, 5rem); letter-spacing: -.055em; }
+      .hero-summary { max-width: 655px; margin: 25px 0 0; color: #e0eaff; font-size: clamp(1.05rem, 2.3vw, 1.32rem); }
+      .byline { margin: 25px 0 0; color: #a9c3e7; font-size: .95rem; }
+      .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
+      .button {
+        display: inline-block;
+        border: 1px solid #7ce0dc;
+        border-radius: 999px;
+        padding: 10px 18px;
+        color: var(--navy);
+        background: #8ce5df;
+        font-weight: 750;
+        text-decoration: none;
+      }
+      .button.alt { color: white; background: transparent; border-color: rgb(255 255 255 / 45%); }
+      .button:hover, .button:focus-visible { filter: brightness(1.08); transform: translateY(-1px); }
+
+      main { padding: 56px 0 72px; }
+      section { scroll-margin-top: 88px; }
+      .section-heading { max-width: 720px; margin-bottom: 28px; }
+      .section-heading h2 { margin: 0; font-size: clamp(1.75rem, 4vw, 2.65rem); letter-spacing: -.04em; }
+      .section-heading p { margin: 13px 0 0; color: var(--muted); }
+      .intro { display: grid; grid-template-columns: 1.1fr .9fr; gap: 28px; align-items: start; }
+      .card {
+        padding: clamp(22px, 4vw, 34px);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: white;
+        box-shadow: var(--shadow);
+      }
+      .key-list { display: grid; gap: 16px; margin: 0; }
+      .key-list div { padding-left: 17px; border-left: 3px solid var(--teal); }
+      .key-list dt { font-weight: 780; }
+      .key-list dd { margin: 3px 0 0; color: var(--muted); font-size: .95rem; }
+
+      .results { margin-top: 72px; }
+      .plot-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+      .plot { overflow: hidden; border: 1px solid var(--line); border-radius: 14px; background: white; }
+      .plot img { width: 100%; aspect-ratio: 1.45; object-fit: contain; padding: 10px; }
+      .plot figcaption { padding: 0 16px 16px; color: var(--muted); font-size: .9rem; }
+
+      .animations { margin-top: 72px; }
+      .animation-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
+      .animation-card { overflow: hidden; border: 1px solid var(--line); border-radius: 18px; background: white; box-shadow: 0 8px 26px rgb(16 35 62 / 7%); }
+      .animation-card img { width: 100%; background: #06152d; }
+      .animation-card div { padding: 19px 20px 21px; }
+      .animation-card h3 { margin: 0; font-size: 1.12rem; }
+      .animation-card p { margin: 7px 0 0; color: var(--muted); font-size: .94rem; }
+
+      .details { margin-top: 72px; }
+      details { border-top: 1px solid var(--line); }
+      details:last-child { border-bottom: 1px solid var(--line); }
+      summary { cursor: pointer; padding: 20px 34px 20px 0; font-size: 1.1rem; font-weight: 750; }
+      summary::marker { color: var(--blue); }
+      .detail-body { max-width: 900px; padding: 0 0 26px; color: var(--muted); }
+      .detail-body p:first-child { margin-top: 0; }
+
+      footer { padding: 34px 0; background: var(--navy); color: #dce9ff; font-size: .92rem; }
+      footer p { margin: 0; }
+
+      @media (max-width: 740px) {
+        body { font-size: 16px; }
+        .wrap { width: min(100% - 28px, 1120px); }
+        .header-inner { min-height: 54px; }
+        .wordmark { display: none; }
+        nav { width: 100%; justify-content: space-between; gap: 15px; }
+        .hero::before { background: linear-gradient(180deg, rgb(7 26 53 / 84%), rgb(7 26 53 / 97%)), url("Images/social-preview.png") 63% / auto 100%; }
+        .hero-inner { padding: 67px 0 62px; }
+        main { padding-top: 42px; }
+        .intro, .plot-grid, .animation-grid { grid-template-columns: 1fr; }
+        .results, .animations, .details { margin-top: 54px; }
+        .plot img { aspect-ratio: auto; }
+      }
+
+      @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .button:hover { transform: none; } }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="wrap header-inner">
+        <a class="wordmark" href="#top">Poster companion</a>
+        <nav aria-label="Page sections">
+          <a href="#overview">Overview</a>
+          <a href="#results">Results</a>
+          <a href="#animations">Animations</a>
+          <a href="#methods">Methods</a>
+        </nav>
+      </div>
+    </header>
+
+    <section class="hero" id="top" aria-labelledby="page-title">
+      <div class="wrap hero-inner">
+        <p class="eyebrow">Scientific poster companion</p>
+        <h1 id="page-title">Accelerated Neural System Identification via Reduced-Order Modeling</h1>
+        <p class="hero-summary">Fast, physics-aware surrogates for nonlinear dynamical systems—designed to retain the essential structure of high-fidelity simulations.</p>
+        <p class="byline">Miles M. Gantcher &middot; Nathan M. Urban<br>Department of Applied Mathematics, Brookhaven National Laboratory</p>
+        <div class="hero-actions">
+          <a class="button" href="#animations">Watch simulations</a>
+          <a class="button alt" href="#results">See results</a>
+        </div>
+      </div>
+    </section>
+
+    <main class="wrap">
+      <section id="overview" class="intro" aria-labelledby="overview-title">
+        <div class="section-heading">
+          <p class="eyebrow" style="color: var(--blue)">At a glance</p>
+          <h2 id="overview-title">High-fidelity behavior, at reduced cost</h2>
+          <p>We use projection-based reduced-order models (ROMs) to approximate large nonlinear systems in a low-dimensional space, then use hyperreduction to make nonlinear evaluations inexpensive.</p>
+        </div>
+        <aside class="card" aria-label="Key ideas">
+          <dl class="key-list">
+            <div>
+              <dt>Reduced coordinates</dt>
+              <dd>Represent a large state using a small set of data-informed spatial modes.</dd>
+            </div>
+            <div>
+              <dt>Structure-aware projection</dt>
+              <dd>Galerkin and Petrov–Galerkin formulations preserve key features of the full model.</dd>
+            </div>
+            <div>
+              <dt>Efficient nonlinear terms</dt>
+              <dd>DEIM and ECSW avoid evaluating every degree of freedom at every time step.</dd>
+            </div>
+          </dl>
+        </aside>
+      </section>
+
+      <section class="results" id="results" aria-labelledby="results-title">
+        <div class="section-heading">
+          <p class="eyebrow" style="color: var(--blue)">Selected results</p>
+          <h2 id="results-title">Speed and learned dynamics</h2>
+          <p>These figures summarize the speedups and neural-function approximation explored in the accompanying work.</p>
+        </div>
+        <div class="plot-grid">
+          <figure class="plot">
+            <img src="Images/Poster_figures/FOM_vs_ROM_speedup.png" alt="Comparison of full-order and reduced-order model speeds" loading="lazy">
+            <figcaption>Full-order versus reduced-order computational cost.</figcaption>
+          </figure>
+          <figure class="plot">
+            <img src="Images/Poster_figures/curve_fit_speedup.png" alt="Speedup as a function of curve fitting" loading="lazy">
+            <figcaption>Performance gains from the reduced representation.</figcaption>
+          </figure>
+          <figure class="plot">
+            <img src="Images/Poster_figures/learned_function_AC.png" alt="Learned Allen-Cahn nonlinear function" loading="lazy">
+            <figcaption>Learned neural approximation of the Allen–Cahn nonlinearity.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="animations" id="animations" aria-labelledby="animations-title">
+        <div class="section-heading">
+          <p class="eyebrow" style="color: var(--blue)">Simulation gallery</p>
+          <h2 id="animations-title">Model trajectories</h2>
+          <p>Animations are embedded directly for smooth viewing on phones and desktops. They may take a moment to load on cellular data.</p>
+        </div>
+        <div class="animation-grid">
+          <article class="animation-card">
+            <img src="Animations/Allen-Cahn_trajectory.gif" alt="Animated Allen-Cahn full-order and reduced-order trajectories" loading="lazy">
+            <div><h3>Allen–Cahn</h3><p>Galerkin projection with 20 spatial modes and DEIM hyperreduction using 20 interpolation points.</p></div>
+          </article>
+          <article class="animation-card">
+            <img src="Animations/Reaction-Diffusion_trajectory.gif" alt="Animated reaction-diffusion full-order and reduced-order trajectories" loading="lazy">
+            <div><h3>Reaction–diffusion</h3><p>Galerkin projection with DEIM points divided between the two nonlinear components.</p></div>
+          </article>
+          <article class="animation-card">
+            <img src="Animations/Cahn-Hilliard_Trajectory.gif" alt="Animated Cahn-Hilliard full-order and reduced-order trajectories" loading="lazy">
+            <div><h3>Cahn–Hilliard</h3><p>Petrov–Galerkin projection with five spatial modes and ECSW hyperreduction.</p></div>
+          </article>
+          <article class="animation-card">
+            <img src="Animations/1d_allen_cahn.gif" alt="Animated one-dimensional Allen-Cahn trajectory" loading="lazy">
+            <div><h3>One-dimensional Allen–Cahn</h3><p>A compact example of the evolving system in reduced coordinates.</p></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="details" id="methods" aria-labelledby="methods-title">
+        <div class="section-heading">
+          <p class="eyebrow" style="color: var(--blue)">Methods, briefly</p>
+          <h2 id="methods-title">Technical background</h2>
+        </div>
+        <details>
+          <summary>Gradient flows and phase-field equations</summary>
+          <div class="detail-body"><p>The Allen–Cahn and Cahn–Hilliard equations describe concentration fields as gradient flows of a Ginzburg–Landau free energy. Allen–Cahn decreases this energy in an L² sense; Cahn–Hilliard additionally preserves mass. The nonlocal Cahn–Hilliard model includes a term that captures polymer constraints in block copolymers.</p></div>
+        </details>
+        <details>
+          <summary>Projection-based model-order reduction</summary>
+          <div class="detail-body"><p>Proper orthogonal decomposition (POD) chooses a low-dimensional basis from simulation snapshots. The full state is approximated as a linear combination of these modes, while Galerkin or Petrov–Galerkin projection produces an evolution equation for the reduced coordinates.</p></div>
+        </details>
+        <details>
+          <summary>Hyperreduction: DEIM and ECSW</summary>
+          <div class="detail-body"><p>DEIM approximates nonlinear function evaluations using a small function basis and selected interpolation points. ECSW instead forms a sparse, nonnegative weighted quadrature rule in reduced space, a useful structure-preserving approach for suitable systems.</p></div>
+        </details>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap"><p>Poster companion site &middot; Accelerated Neural System Identification via Reduced-Order Modeling</p></div>
+    </footer>
+  </body>
+</html>

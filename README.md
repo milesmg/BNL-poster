@@ -1,4 +1,20 @@
-# Accelerated Neural System Identification via Reduced-Order Modeling 
+# Accelerated Neural System Identification via Reduced-Order Modeling
+
+This repository is a mobile-friendly companion website for the scientific poster. The published page displays the figures and simulation animations directly, rather than asking visitors to browse the repository files.
+
+## Publish it as a website
+
+On GitHub, open this repository's **Settings** tab, then **Pages**. Under **Build and deployment**, select **Deploy from a branch**, choose the `main` branch, select the `/ (root)` folder, and save. GitHub will provide a public address in this form:
+
+```text
+https://YOUR-GITHUB-USERNAME.github.io/BNL-poster/
+```
+
+That public website address—not the repository address—is the link to put in your QR code. Visitors can open it directly on a phone or desktop browser.
+
+Once Pages is enabled, changes you upload to the repository will automatically appear on the site after GitHub republishes it (usually within a few minutes).
+
+---
 
 Miles M. Gantcher$^1$, Nathan M. Urban$^1$
 
