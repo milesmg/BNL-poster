@@ -8,20 +8,37 @@ $^1$Department of Applied Mathematics, Brookhaven National Laboratory, Upton, NY
 
 ## Figures
 
-- Simulated Allen-Cahn Trajectory on a FOM and ROM, with spatial and function modes
-- Simulated Reaction-Diffusion Trajectory on a FOM and ROM
-- Simulated Cahn-Hilliard Trajectory on a FOM and ROM, with spatial modes
-- Neural Allen-Cahn Trajectory on a FOM and ROM
-- 1-dimensional allen cahn trajectory, with FOM and ROM modes and evoluation of coefficients over time (reduced trajectory)
+- Animations
+  - Allen-Cahn Trajectory on a FOM and ROM
+    - Galerkin projection with r = 20 spatial modes
+    - DEIM hyperreduction, m = 20 DEIM points
+  - Reaction-Diffusion Trajectory on a FOM and ROM
+    - Galerkin projection
+    - DEIM hyperreduction, m = 20 DEIM points split evenly between $s_1$ and $s_2$
+  - Cahn-Hilliard Trajectory on a FOM and ROM
+    - Petrov-Galerkin projection with a $(-\Delta)^{-1}$ trial basis, r = 5 spatial modes
+    - ECSW hyperreduction, m = 30 maximum non-zero ECSW elements
+<!-- - $\kappa = 0.1$, $\bar{c} = 0.0$ -->
+  - **Learned (neural nonlinearity) Allen-Cahn Trajectory on a FOM and ROM**
+  - 1-dimensional Allen-Cahn trajectory
+  - Evoluation of Allen-Cahn coefficients over time (reduced trajectory) for 1-D trajectory
+  - Evolution of Allen-Cahn modes over time for 1-D trajectory
+- Images
+  - 2-D reaction diffusion target function plot
+  - 1-D allen cahn target function plot
+  - 1-D allen cahn target function with learned neural approximation
+  - Spatial modes, A-C trajactory
+  - Spatial modes, R-D trajectory
+  - Spatial modes, C-H trajectory
 
 ## A Note on Gradient Flows and the Allen-Cahn and Cahn-Hilliard Equations
 
 Let $c\in [-1,1]^{N^d}$ denote a scalar relative concentration field; that is, each point in our field, $c(x_1,...,x_d)$, denotes the relative concentration $[A]-[B]$ of two solutes. Both the Allen-Cahn and Cahn-Hilliard equation are formulated as gradient flows of the Ginzburg-Landau free energy functional on this field. That functional takes the form 
-$$E[c] = \int_\Omega |\nabla c|^2 + F(c)d\Omega,$$ 
+$$E[c] = \int_\Omega \frac{\kappa}{2} |\nabla c|^2 + F(c)d\Omega,$$ 
 where $\Omega$ is the spatial domain. Here, the gradient term penalizes rapid changes in concentration; $F$ is the free energy term, often represented by a double well potential $F(c) = \frac{(c^2-1)^2}{4}$
 
 The Allen-Cahn equation is an $L^2-$gradient flow; under the Allen-Cahn equation, $c_t$ is such that $E[c]$ is minimized as much as possible at each time. The Cahn-Hilliard equation is similar, but $c_t$ must preserve mass. The *nonlocal* Cahn-Hilliard equation describes the dissolution of species $A$ and $B$ when they are attached to a polymer, known as a block copolymer. This equation adds a term to the free energy which represents the polymer constraints, giving 
-$$E_{nonlocal}[c] = \int_\Omega |\nabla c|^2 + F(c) + \frac{\sigma}{2}(c - \bar{c})(-\Delta ^{-1})(c-\bar{c})d\Omega,$$
+$$E_{nonlocal}[c] = \int_\Omega \frac {\kappa}{2}|\nabla c|^2 + F(c) + \frac{\sigma}{2}(c - \bar{c})(-\Delta ^{-1})(c-\bar{c})d\Omega,$$
 where $\bar{c}$ is the mean concentration (average mass) and $-\Delta ^{-1}$ is the negative inverse of the Laplacian operator, which is defined on the zero mean subspace in which $c - \bar{c}$ lives. 
 
 
@@ -64,4 +81,4 @@ where $L^e$ selects the $e-$th element and $E$ is the set of elements, via
 $$f(u) \approx \tilde{f}(u) =  \sum_{e \in \tilde{E} \subset E} \xi_e (L^e U)^TL^e f(Uu).$$ 
 Enforcing the nonnegativity of the $\{\xi_e\}$ makes ECSW energy conserving in the right contexts. We let $\xi$ denote the vector of these 'quadrature weights.' Let $G$ denote a matrix of per-element reduced force snapshots generated from data; let $b$ denote the matrix of their sums across elements (that is, the matrix of reduced force snapshots). Then the offline 'training' of ECSW, analogous to the SVD and greedy evaluation point selection of the DEIM algorithm, involves adjusting $\xi$ to minimize 
 $$||G\xi = b||$$
- while keeping all elements nonnegative, and keeping as many 0 as possible. 
+ while keeping all elements nonnegative, and keeping as many **zero** as possible. 
