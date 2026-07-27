@@ -4,10 +4,10 @@ This repository is a mobile-friendly companion website for the scientific poster
 
 ## Publish it as a website
 
-On GitHub, open this repository's **Settings** tab, then **Pages**. Under **Build and deployment**, select **Deploy from a branch**, choose the `main` branch, select the `/ (root)` folder, and save. GitHub will provide a public address in this form:
+On GitHub, open this repository's [Pages settings](https://github.com/milesmg/BNL-poster/settings/pages). Under **Build and deployment**, select **Deploy from a branch**, choose the `main` branch, select the `/ (root)` folder, and save. GitHub will publish the site at:
 
 ```text
-https://YOUR-GITHUB-USERNAME.github.io/BNL-poster/
+https://milesmg.github.io/BNL-poster/
 ```
 
 That public website address—not the repository address—is the link to put in your QR code. Visitors can open it directly on a phone or desktop browser.
