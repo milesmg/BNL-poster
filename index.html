@@ -3,276 +3,235 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Poster companion site for Accelerated Neural System Identification via Reduced-Order Modeling.">
+    <meta name="description" content="Accelerated Neural System Identification via Reduced-Order Modeling">
     <meta name="theme-color" content="#071a35">
-    <meta property="og:title" content="Accelerated Neural System Identification">
-    <meta property="og:description" content="Poster companion: reduced-order models, hyperreduction, and simulation results.">
-    <title>Accelerated Neural System Identification</title>
+    <title>Accelerated Neural System Identification via Reduced-Order Modeling</title>
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          displayMath: [['$$', '$$'], ['\\[', '\\]']]
+        },
+        options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+      };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/marked@15.0.7/lib/marked.umd.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
       :root {
-        --ink: #10233e;
-        --muted: #52657c;
-        --paper: #f7f9fc;
-        --line: #dbe3ee;
-        --blue: #1459b8;
         --navy: #071a35;
-        --teal: #06a7a5;
-        --coral: #ef6c58;
-        --shadow: 0 18px 42px rgb(16 35 62 / 11%);
+        --blue: #1459b8;
+        --teal: #067f8a;
+        --ink: #14243c;
+        --muted: #58687a;
+        --paper: #f8fafc;
+        --line: #d8e0ea;
       }
-
       * { box-sizing: border-box; }
       html { scroll-behavior: smooth; }
-      body {
-        margin: 0;
-        color: var(--ink);
-        background: var(--paper);
-        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-        font-size: 17px;
-        line-height: 1.6;
+      body { margin: 0; color: var(--ink); background: var(--paper); font: 16px/1.62 Georgia, 'Times New Roman', serif; }
+      a { color: var(--blue); }
+      button { font: inherit; }
+      .site-header { position: sticky; top: 0; z-index: 10; border-bottom: 1px solid rgb(255 255 255 / 18%); background: var(--navy); }
+      .bar { display: flex; width: min(1120px, calc(100% - 36px)); margin: auto; }
+      .tab { padding: 15px 17px; border: 0; border-bottom: 3px solid transparent; color: #cbd8e9; background: transparent; cursor: pointer; font-family: ui-sans-serif, system-ui, sans-serif; font-size: .91rem; }
+      .tab[aria-selected='true'] { border-color: #73d8d4; color: white; font-weight: 700; }
+      .view { display: none; }
+      .view.active { display: block; }
+
+      #readme-view { width: min(930px, calc(100% - 36px)); margin: 54px auto 80px; }
+      #readme { min-height: 50vh; }
+      #readme h1 { margin: 0 0 8px; color: var(--navy); font-size: clamp(2rem, 5vw, 3.45rem); line-height: 1.15; letter-spacing: -.025em; }
+      #readme h2 { margin: 50px 0 15px; padding-bottom: 8px; border-bottom: 1px solid var(--line); color: var(--navy); font-size: clamp(1.35rem, 3vw, 1.85rem); line-height: 1.25; }
+      #readme p { margin: 15px 0; }
+      #readme ul { padding-left: 26px; }
+      #readme li { margin: 4px 0; }
+      #readme li a { text-underline-offset: 3px; }
+      #readme mjx-container[display='true'] { overflow-x: auto; overflow-y: hidden; padding: 6px 0; }
+      .loading { color: var(--muted); font-family: ui-sans-serif, system-ui, sans-serif; }
+
+      #figures-view { width: min(1120px, calc(100% - 36px)); margin: 46px auto 80px; }
+      .directory-title { margin: 0 0 24px; color: var(--navy); font-size: clamp(2rem, 5vw, 3.1rem); line-height: 1.15; }
+      .directory { border-top: 1px solid var(--line); font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: .92rem; }
+      .folder { border-bottom: 1px solid var(--line); }
+      .folder summary { padding: 13px 10px; cursor: pointer; color: var(--navy); font-weight: 700; }
+      .folder summary::marker { color: var(--teal); }
+      .file-list { margin: 0; padding: 0 0 10px 34px; list-style: none; }
+      .file-list li { margin: 2px 0; }
+      .file-button { width: 100%; padding: 7px 8px; border: 0; border-radius: 3px; color: var(--blue); background: transparent; text-align: left; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+      .file-button:hover, .file-button:focus-visible { background: #e8f1fd; color: #073d88; }
+
+      dialog { width: 100vw; max-width: none; height: 100vh; max-height: none; margin: 0; padding: 0; border: 0; background: #020917; color: white; }
+      dialog::backdrop { background: #020917; }
+      .viewer { display: grid; grid-template-rows: minmax(0, 1fr) auto; height: 100%; }
+      .viewer-media { display: grid; min-height: 0; place-items: center; padding: 58px 22px 22px; }
+      .viewer-media img { max-width: 100%; max-height: 100%; object-fit: contain; }
+      .viewer-caption { display: flex; align-items: center; gap: 18px; min-height: 68px; padding: 15px max(22px, calc((100vw - 1120px) / 2)); background: #071a35; font-family: ui-sans-serif, system-ui, sans-serif; }
+      .viewer-caption p { flex: 1; margin: 0; color: #d9e5f5; }
+      .close { position: fixed; top: 15px; right: 17px; z-index: 1; padding: 8px 13px; border: 1px solid #8398b7; border-radius: 4px; color: white; background: #071a35; cursor: pointer; font-family: ui-sans-serif, system-ui, sans-serif; }
+      .close:hover, .close:focus-visible { background: #173a6d; }
+      @media (max-width: 600px) {
+        #readme-view { margin-top: 36px; }
+        #readme { font-size: .98rem; }
+        #readme ul { padding-left: 21px; }
+        .viewer-caption { align-items: start; flex-direction: column; gap: 5px; }
       }
-
-      a { color: inherit; }
-      img { display: block; max-width: 100%; }
-      .wrap { width: min(1120px, calc(100% - 40px)); margin-inline: auto; }
-
-      .site-header {
-        position: sticky;
-        top: 0;
-        z-index: 2;
-        border-bottom: 1px solid rgb(255 255 255 / 13%);
-        background: rgb(7 26 53 / 94%);
-        backdrop-filter: blur(12px);
-        color: white;
-      }
-      .header-inner {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 20px;
-        min-height: 60px;
-      }
-      .wordmark { font-weight: 750; font-size: .92rem; letter-spacing: .02em; text-decoration: none; }
-      nav { display: flex; gap: 18px; overflow-x: auto; white-space: nowrap; }
-      nav a { color: #dce9ff; font-size: .86rem; text-decoration: none; }
-      nav a:hover, nav a:focus-visible { color: white; text-decoration: underline; text-underline-offset: 4px; }
-
-      .hero {
-        overflow: hidden;
-        position: relative;
-        color: white;
-        background: var(--navy);
-      }
-      .hero::before {
-        position: absolute;
-        inset: 0;
-        background:
-          radial-gradient(circle at 84% 20%, rgb(6 167 165 / 32%), transparent 22%),
-          radial-gradient(circle at 72% 78%, rgb(239 108 88 / 18%), transparent 22%),
-          linear-gradient(125deg, #071a35 0%, #0d3261 100%);
-        content: "";
-      }
-      .hero-inner { position: relative; padding: clamp(68px, 12vw, 132px) 0 82px; }
-      .eyebrow { margin: 0 0 18px; color: #74e2dc; font-size: .78rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
-      h1, h2, h3 { line-height: 1.1; }
-      h1 { max-width: 800px; margin: 0; font-size: clamp(2.45rem, 7vw, 5rem); letter-spacing: -.055em; }
-      .hero-summary { max-width: 655px; margin: 25px 0 0; color: #e0eaff; font-size: clamp(1.05rem, 2.3vw, 1.32rem); }
-      .byline { margin: 25px 0 0; color: #a9c3e7; font-size: .95rem; }
-      .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
-      .button {
-        display: inline-block;
-        border: 1px solid #7ce0dc;
-        border-radius: 999px;
-        padding: 10px 18px;
-        color: var(--navy);
-        background: #8ce5df;
-        font-weight: 750;
-        text-decoration: none;
-      }
-      .button.alt { color: white; background: transparent; border-color: rgb(255 255 255 / 45%); }
-      .button:hover, .button:focus-visible { filter: brightness(1.08); transform: translateY(-1px); }
-
-      main { padding: 56px 0 72px; }
-      section { scroll-margin-top: 88px; }
-      .section-heading { max-width: 720px; margin-bottom: 28px; }
-      .section-heading h2 { margin: 0; font-size: clamp(1.75rem, 4vw, 2.65rem); letter-spacing: -.04em; }
-      .section-heading p { margin: 13px 0 0; color: var(--muted); }
-      .intro { display: grid; grid-template-columns: 1.1fr .9fr; gap: 28px; align-items: start; }
-      .card {
-        padding: clamp(22px, 4vw, 34px);
-        border: 1px solid var(--line);
-        border-radius: 18px;
-        background: white;
-        box-shadow: var(--shadow);
-      }
-      .key-list { display: grid; gap: 16px; margin: 0; }
-      .key-list div { padding-left: 17px; border-left: 3px solid var(--teal); }
-      .key-list dt { font-weight: 780; }
-      .key-list dd { margin: 3px 0 0; color: var(--muted); font-size: .95rem; }
-
-      .results { margin-top: 72px; }
-      .plot-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-      .plot { overflow: hidden; border: 1px solid var(--line); border-radius: 14px; background: white; }
-      .plot img { width: 100%; aspect-ratio: 1.45; object-fit: contain; padding: 10px; }
-      .plot figcaption { padding: 0 16px 16px; color: var(--muted); font-size: .9rem; }
-
-      .animations { margin-top: 72px; }
-      .animation-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
-      .animation-card { overflow: hidden; border: 1px solid var(--line); border-radius: 18px; background: white; box-shadow: 0 8px 26px rgb(16 35 62 / 7%); }
-      .animation-card img { width: 100%; background: #06152d; }
-      .animation-card div { padding: 19px 20px 21px; }
-      .animation-card h3 { margin: 0; font-size: 1.12rem; }
-      .animation-card p { margin: 7px 0 0; color: var(--muted); font-size: .94rem; }
-
-      .details { margin-top: 72px; }
-      details { border-top: 1px solid var(--line); }
-      details:last-child { border-bottom: 1px solid var(--line); }
-      summary { cursor: pointer; padding: 20px 34px 20px 0; font-size: 1.1rem; font-weight: 750; }
-      summary::marker { color: var(--blue); }
-      .detail-body { max-width: 900px; padding: 0 0 26px; color: var(--muted); }
-      .detail-body p:first-child { margin-top: 0; }
-
-      footer { padding: 34px 0; background: var(--navy); color: #dce9ff; font-size: .92rem; }
-      footer p { margin: 0; }
-
-      @media (max-width: 740px) {
-        body { font-size: 16px; }
-        .wrap { width: min(100% - 28px, 1120px); }
-        .header-inner { min-height: 54px; }
-        .wordmark { display: none; }
-        nav { width: 100%; justify-content: space-between; gap: 15px; }
-        .hero::before { background: linear-gradient(180deg, rgb(7 26 53 / 6%), rgb(7 26 53 / 35%)); }
-        .hero-inner { padding: 67px 0 62px; }
-        main { padding-top: 42px; }
-        .intro, .plot-grid, .animation-grid { grid-template-columns: 1fr; }
-        .results, .animations, .details { margin-top: 54px; }
-        .plot img { aspect-ratio: auto; }
-      }
-
-      @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .button:hover { transform: none; } }
     </style>
   </head>
   <body>
     <header class="site-header">
-      <div class="wrap header-inner">
-        <a class="wordmark" href="#top">Poster companion</a>
-        <nav aria-label="Page sections">
-          <a href="#overview">Overview</a>
-          <a href="#results">Results</a>
-          <a href="#animations">Animations</a>
-          <a href="#methods">Methods</a>
-        </nav>
-      </div>
+      <nav class="bar" aria-label="Site sections">
+        <button class="tab" type="button" data-view="readme-view" aria-selected="true">README</button>
+        <button class="tab" type="button" data-view="figures-view" aria-selected="false">Figures</button>
+      </nav>
     </header>
 
-    <section class="hero" id="top" aria-labelledby="page-title">
-      <div class="wrap hero-inner">
-        <p class="eyebrow">Scientific poster companion</p>
-        <h1 id="page-title">Accelerated Neural System Identification via Reduced-Order Modeling</h1>
-        <p class="hero-summary">Fast, physics-aware surrogates for nonlinear dynamical systems—designed to retain the essential structure of high-fidelity simulations.</p>
-        <p class="byline">Miles M. Gantcher &middot; Nathan M. Urban<br>Department of Applied Mathematics, Brookhaven National Laboratory</p>
-        <div class="hero-actions">
-          <a class="button" href="#animations">Watch simulations</a>
-          <a class="button alt" href="#results">See results</a>
-        </div>
-      </div>
-    </section>
-
-    <main class="wrap">
-      <section id="overview" class="intro" aria-labelledby="overview-title">
-        <div class="section-heading">
-          <p class="eyebrow" style="color: var(--blue)">At a glance</p>
-          <h2 id="overview-title">High-fidelity behavior, at reduced cost</h2>
-          <p>We use projection-based reduced-order models (ROMs) to approximate large nonlinear systems in a low-dimensional space, then use hyperreduction to make nonlinear evaluations inexpensive.</p>
-        </div>
-        <aside class="card" aria-label="Key ideas">
-          <dl class="key-list">
-            <div>
-              <dt>Reduced coordinates</dt>
-              <dd>Represent a large state using a small set of data-informed spatial modes.</dd>
-            </div>
-            <div>
-              <dt>Structure-aware projection</dt>
-              <dd>Galerkin and Petrov–Galerkin formulations preserve key features of the full model.</dd>
-            </div>
-            <div>
-              <dt>Efficient nonlinear terms</dt>
-              <dd>DEIM and ECSW avoid evaluating every degree of freedom at every time step.</dd>
-            </div>
-          </dl>
-        </aside>
+    <main>
+      <section class="view active" id="readme-view" aria-label="README document">
+        <article id="readme"><p class="loading">Loading README…</p></article>
       </section>
-
-      <section class="results" id="results" aria-labelledby="results-title">
-        <div class="section-heading">
-          <p class="eyebrow" style="color: var(--blue)">Selected results</p>
-          <h2 id="results-title">Speed and learned dynamics</h2>
-          <p>These figures summarize the speedups and neural-function approximation explored in the accompanying work.</p>
-        </div>
-        <div class="plot-grid">
-          <figure class="plot">
-            <img src="images/Poster_figures/FOM_vs_ROM_speedup.png" alt="Comparison of full-order and reduced-order model speeds" loading="lazy">
-            <figcaption>Full-order versus reduced-order computational cost.</figcaption>
-          </figure>
-          <figure class="plot">
-            <img src="images/Poster_figures/curve_fit_speedup.png" alt="Speedup as a function of curve fitting" loading="lazy">
-            <figcaption>Performance gains from the reduced representation.</figcaption>
-          </figure>
-          <figure class="plot">
-            <img src="images/Poster_figures/learned_function_AC.png" alt="Learned Allen-Cahn nonlinear function" loading="lazy">
-            <figcaption>Learned neural approximation of the Allen–Cahn nonlinearity.</figcaption>
-          </figure>
-        </div>
-      </section>
-
-      <section class="animations" id="animations" aria-labelledby="animations-title">
-        <div class="section-heading">
-          <p class="eyebrow" style="color: var(--blue)">Simulation gallery</p>
-          <h2 id="animations-title">Model trajectories</h2>
-          <p>Animations are embedded directly for smooth viewing on phones and desktops. They may take a moment to load on cellular data.</p>
-        </div>
-        <div class="animation-grid">
-          <article class="animation-card">
-            <img src="animations/Allen-Cahn_trajectory.gif" alt="Animated Allen-Cahn full-order and reduced-order trajectories" loading="lazy">
-            <div><h3>Allen–Cahn</h3><p>Galerkin projection with 20 spatial modes and DEIM hyperreduction using 20 interpolation points.</p></div>
-          </article>
-          <article class="animation-card">
-            <img src="animations/Reaction-Diffusion_trajectory.gif" alt="Animated reaction-diffusion full-order and reduced-order trajectories" loading="lazy">
-            <div><h3>Reaction–diffusion</h3><p>Galerkin projection with DEIM points divided between the two nonlinear components.</p></div>
-          </article>
-          <article class="animation-card">
-            <img src="animations/Cahn-Hilliard_Trajectory.gif" alt="Animated Cahn-Hilliard full-order and reduced-order trajectories" loading="lazy">
-            <div><h3>Cahn–Hilliard</h3><p>Petrov–Galerkin projection with five spatial modes and ECSW hyperreduction.</p></div>
-          </article>
-          <article class="animation-card">
-            <img src="animations/1d_allen_cahn.gif" alt="Animated one-dimensional Allen-Cahn trajectory" loading="lazy">
-            <div><h3>One-dimensional Allen–Cahn</h3><p>A compact example of the evolving system in reduced coordinates.</p></div>
-          </article>
-        </div>
-      </section>
-
-      <section class="details" id="methods" aria-labelledby="methods-title">
-        <div class="section-heading">
-          <p class="eyebrow" style="color: var(--blue)">Methods, briefly</p>
-          <h2 id="methods-title">Technical background</h2>
-        </div>
-        <details>
-          <summary>Gradient flows and phase-field equations</summary>
-          <div class="detail-body"><p>The Allen–Cahn and Cahn–Hilliard equations describe concentration fields as gradient flows of a Ginzburg–Landau free energy. Allen–Cahn decreases this energy in an L² sense; Cahn–Hilliard additionally preserves mass. The nonlocal Cahn–Hilliard model includes a term that captures polymer constraints in block copolymers.</p></div>
-        </details>
-        <details>
-          <summary>Projection-based model-order reduction</summary>
-          <div class="detail-body"><p>Proper orthogonal decomposition (POD) chooses a low-dimensional basis from simulation snapshots. The full state is approximated as a linear combination of these modes, while Galerkin or Petrov–Galerkin projection produces an evolution equation for the reduced coordinates.</p></div>
-        </details>
-        <details>
-          <summary>Hyperreduction: DEIM and ECSW</summary>
-          <div class="detail-body"><p>DEIM approximates nonlinear function evaluations using a small function basis and selected interpolation points. ECSW instead forms a sparse, nonnegative weighted quadrature rule in reduced space, a useful structure-preserving approach for suitable systems.</p></div>
-        </details>
+      <section class="view" id="figures-view" aria-label="Figures directory">
+        <h1 class="directory-title">Figures</h1>
+        <div class="directory" id="directory"></div>
       </section>
     </main>
 
-    <footer>
-      <div class="wrap"><p>Poster companion site &middot; Accelerated Neural System Identification via Reduced-Order Modeling</p></div>
-    </footer>
+    <dialog id="figure-viewer" aria-label="Figure viewer">
+      <div class="viewer">
+        <button class="close" type="button" id="close-viewer">Close</button>
+        <div class="viewer-media"><img id="viewer-image" alt=""></div>
+        <div class="viewer-caption"><p id="viewer-caption">Caption placeholder.</p></div>
+      </div>
+    </dialog>
+
+    <script>
+      window.addEventListener('load', () => {
+      const figures = [
+        { name: 'Animations', files: [
+          '1d_allen_cahn.gif', '1d_rom_mode_contributions.gif', '1d_rom_reduced_state.gif',
+          'Allen-Cahn_trajectory.gif', 'Cahn-Hilliard_Trajectory.gif', 'Reaction-Diffusion_trajectory.gif'
+        ]},
+        { name: 'Images', folders: [
+          { name: '1D_allen-cahn_spatial_modes', files: ['1d_ac_mode_1.png', '1d_ac_mode_2.png', '1d_ac_mode_3.png'] },
+          { name: '2D_Allen-Cahn_Spatial_Modes', files: ['rom_spatial_mode_1.png', 'rom_spatial_mode_2.png', 'rom_spatial_mode_3.png', 'rom_spatial_mode_4.png', 'rom_spatial_mode_5.png'] },
+          { name: 'Cahn-Hilliard_Spatial_Modes', files: ['rom_spatial_mode_1.png', 'rom_spatial_mode_2.png', 'rom_spatial_mode_3.png', 'rom_spatial_mode_4.png', 'rom_spatial_mode_5.png'] },
+          { name: 'Nonlinearities', files: ['ac_nonlinearity.png', 'rd_nonlinearity.png'] },
+          { name: 'Poster_figures', files: ['FOM_vs_ROM_speedup.png', 'curve_fit_speedup.png', 'learned_function_AC.png'] },
+          { name: 'Reaction-diffusion_spatial_modes', files: ['rom_spatial_mode_1.png', 'rom_spatial_mode_2.png', 'rom_spatial_mode_3.png', 'rom_spatial_mode_4.png', 'rom_spatial_mode_5.png'] }
+        ]}
+      ];
+      // Replace the placeholder text below with the caption for each figure.
+      const captions = {
+        'Figures/Animations/1d_allen_cahn.gif': 'Caption placeholder.',
+        'Figures/Animations/1d_rom_mode_contributions.gif': 'Caption placeholder.',
+        'Figures/Animations/1d_rom_reduced_state.gif': 'Caption placeholder.',
+        'Figures/Animations/Allen-Cahn_trajectory.gif': 'Caption placeholder.',
+        'Figures/Animations/Cahn-Hilliard_Trajectory.gif': 'Caption placeholder.',
+        'Figures/Animations/Reaction-Diffusion_trajectory.gif': 'Caption placeholder.',
+        'Figures/Images/1D_allen-cahn_spatial_modes/1d_ac_mode_1.png': 'Caption placeholder.',
+        'Figures/Images/1D_allen-cahn_spatial_modes/1d_ac_mode_2.png': 'Caption placeholder.',
+        'Figures/Images/1D_allen-cahn_spatial_modes/1d_ac_mode_3.png': 'Caption placeholder.',
+        'Figures/Images/2D_Allen-Cahn_Spatial_Modes/rom_spatial_mode_1.png': 'Caption placeholder.',
+        'Figures/Images/2D_Allen-Cahn_Spatial_Modes/rom_spatial_mode_2.png': 'Caption placeholder.',
+        'Figures/Images/2D_Allen-Cahn_Spatial_Modes/rom_spatial_mode_3.png': 'Caption placeholder.',
+        'Figures/Images/2D_Allen-Cahn_Spatial_Modes/rom_spatial_mode_4.png': 'Caption placeholder.',
+        'Figures/Images/2D_Allen-Cahn_Spatial_Modes/rom_spatial_mode_5.png': 'Caption placeholder.',
+        'Figures/Images/Cahn-Hilliard_Spatial_Modes/rom_spatial_mode_1.png': 'Caption placeholder.',
+        'Figures/Images/Cahn-Hilliard_Spatial_Modes/rom_spatial_mode_2.png': 'Caption placeholder.',
+        'Figures/Images/Cahn-Hilliard_Spatial_Modes/rom_spatial_mode_3.png': 'Caption placeholder.',
+        'Figures/Images/Cahn-Hilliard_Spatial_Modes/rom_spatial_mode_4.png': 'Caption placeholder.',
+        'Figures/Images/Cahn-Hilliard_Spatial_Modes/rom_spatial_mode_5.png': 'Caption placeholder.',
+        'Figures/Images/Nonlinearities/ac_nonlinearity.png': 'Caption placeholder.',
+        'Figures/Images/Nonlinearities/rd_nonlinearity.png': 'Caption placeholder.',
+        'Figures/Images/Poster_figures/FOM_vs_ROM_speedup.png': 'Caption placeholder.',
+        'Figures/Images/Poster_figures/curve_fit_speedup.png': 'Caption placeholder.',
+        'Figures/Images/Poster_figures/learned_function_AC.png': 'Caption placeholder.',
+        'Figures/Images/Reaction-diffusion_spatial_modes/rom_spatial_mode_1.png': 'Caption placeholder.',
+        'Figures/Images/Reaction-diffusion_spatial_modes/rom_spatial_mode_2.png': 'Caption placeholder.',
+        'Figures/Images/Reaction-diffusion_spatial_modes/rom_spatial_mode_3.png': 'Caption placeholder.',
+        'Figures/Images/Reaction-diffusion_spatial_modes/rom_spatial_mode_4.png': 'Caption placeholder.',
+        'Figures/Images/Reaction-diffusion_spatial_modes/rom_spatial_mode_5.png': 'Caption placeholder.'
+      };
+      const readme = document.querySelector('#readme');
+      const directory = document.querySelector('#directory');
+      const dialog = document.querySelector('#figure-viewer');
+      const image = document.querySelector('#viewer-image');
+      const caption = document.querySelector('#viewer-caption');
+
+      function pathButton(path, filename) {
+        const button = document.createElement('button');
+        button.className = 'file-button';
+        button.type = 'button';
+        button.textContent = filename;
+        button.addEventListener('click', () => openFigure(path));
+        return button;
+      }
+      function fileList(base, files) {
+        const list = document.createElement('ul');
+        list.className = 'file-list';
+        files.forEach((file) => {
+          const item = document.createElement('li');
+          item.append(pathButton(`${base}/${file}`, file));
+          list.append(item);
+        });
+        return list;
+      }
+      function folder(name, content, id) {
+        const node = document.createElement('details');
+        node.className = 'folder';
+        if (id) node.id = `folder-${id}`;
+        const summary = document.createElement('summary');
+        summary.textContent = `${name}/`;
+        node.append(summary, content);
+        return node;
+      }
+      function buildDirectory() {
+        figures.forEach((group) => {
+          const base = `Figures/${group.name}`;
+          const content = document.createElement('div');
+          if (group.files) content.append(fileList(base, group.files));
+          if (group.folders) group.folders.forEach((subfolder) => content.append(folder(subfolder.name, fileList(`${base}/${subfolder.name}`, subfolder.files), `${group.name}/${subfolder.name}`)));
+          directory.append(folder(group.name, content, group.name));
+        });
+      }
+      function setView(id) {
+        document.querySelectorAll('.view').forEach((view) => view.classList.toggle('active', view.id === id));
+        document.querySelectorAll('.tab').forEach((tab) => tab.setAttribute('aria-selected', String(tab.dataset.view === id)));
+      }
+      function openFigure(path) {
+        setView('figures-view');
+        image.src = path;
+        image.alt = path.split('/').pop();
+        caption.textContent = captions[path] || 'Caption placeholder.';
+        if (!dialog.open) dialog.showModal();
+      }
+      function applyHash() {
+        const hash = decodeURIComponent(location.hash.slice(1));
+        if (hash.startsWith('figure=')) openFigure(hash.slice(7));
+        if (hash.startsWith('folder=')) {
+          setView('figures-view');
+          const folderNode = document.querySelector(`#folder-${CSS.escape(hash.slice(7).replace('Figures/', ''))}`);
+          if (folderNode) { folderNode.open = true; folderNode.scrollIntoView({ block: 'start' }); }
+        }
+        if (hash === 'figures') setView('figures-view');
+      }
+      document.querySelectorAll('.tab').forEach((tab) => tab.addEventListener('click', () => {
+        setView(tab.dataset.view);
+        history.replaceState(null, '', tab.dataset.view === 'figures-view' ? '#figures' : location.pathname);
+      }));
+      document.querySelector('#close-viewer').addEventListener('click', () => dialog.close());
+      dialog.addEventListener('click', (event) => { if (event.target === dialog) dialog.close(); });
+      buildDirectory();
+      window.addEventListener('hashchange', applyHash);
+      fetch('README.md')
+        .then((response) => { if (!response.ok) throw new Error('README could not be loaded.'); return response.text(); })
+        .then((markdown) => {
+          readme.innerHTML = marked.parse(markdown);
+          return MathJax.startup.promise.then(() => MathJax.typesetPromise([readme]));
+        })
+        .catch((error) => { readme.innerHTML = `<p class="loading">${error.message}</p>`; });
+      applyHash();
+      });
+    </script>
   </body>
 </html>

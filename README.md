@@ -1,21 +1,5 @@
 # Accelerated Neural System Identification via Reduced-Order Modeling
 
-This repository is a mobile-friendly companion website for the scientific poster. The published page displays the figures and simulation animations directly, rather than asking visitors to browse the repository files.
-
-## Publish it as a website
-
-On GitHub, open this repository's [Pages settings](https://github.com/milesmg/BNL-poster/settings/pages). Under **Build and deployment**, select **Deploy from a branch**, choose the `main` branch, select the `/ (root)` folder, and save. GitHub will publish the site at:
-
-```text
-https://milesmg.github.io/BNL-poster/
-```
-
-That public website address—not the repository address—is the link to put in your QR code. Visitors can open it directly on a phone or desktop browser.
-
-Once Pages is enabled, changes you upload to the repository will automatically appear on the site after GitHub republishes it (usually within a few minutes).
-
----
-
 Miles M. Gantcher$^1$, Nathan M. Urban$^1$
 
 
@@ -24,28 +8,28 @@ $^1$Department of Applied Mathematics, Brookhaven National Laboratory, Upton, NY
 
 ## Figures
 
-- Animations
-  - Allen-Cahn Trajectory on a FOM and ROM
+- [Animations](#figures)
+  - [Allen-Cahn Trajectory on a FOM and ROM](#figure=Figures/Animations/Allen-Cahn_trajectory.gif)
     - Galerkin projection with r = 20 spatial modes
     - DEIM hyperreduction, m = 20 DEIM points
-  - Reaction-Diffusion Trajectory on a FOM and ROM
-    - Galerkin projection
+  - [Reaction-Diffusion Trajectory on a FOM and ROM](#figure=Figures/Animations/Reaction-Diffusion_trajectory.gif)
+    - Galerkin projection, r = 20 spatial modes
     - DEIM hyperreduction, m = 20 DEIM points split evenly between $s_1$ and $s_2$
-  - Cahn-Hilliard Trajectory on a FOM and ROM
+  - [Cahn-Hilliard Trajectory on a FOM and ROM](#figure=Figures/Animations/Cahn-Hilliard_Trajectory.gif)
     - Petrov-Galerkin projection with a $(-\Delta)^{-1}$ trial basis, r = 5 spatial modes
     - ECSW hyperreduction, m = 30 maximum non-zero ECSW elements
 <!-- - $\kappa = 0.1$, $\bar{c} = 0.0$ -->
-  - **Learned (neural nonlinearity) Allen-Cahn Trajectory on a FOM and ROM**
-  - 1-dimensional Allen-Cahn trajectory
-  - Evoluation of Allen-Cahn coefficients over time (reduced trajectory) for 1-D trajectory
-  - Evolution of Allen-Cahn modes over time for 1-D trajectory
-- Images
-  - 2-D reaction diffusion target function plot
-  - 1-D allen cahn target function plot
-  - 1-D allen cahn target function with learned neural approximation
-  - Spatial modes, A-C trajactory
-  - Spatial modes, R-D trajectory
-  - Spatial modes, C-H trajectory
+  - **[Key Result: Learned (neural nonlinearity) Allen-Cahn Trajectory on a FOM and ROM](#figure=Figures/Animations/Allen-Cahn_trajectory.gif)**
+  - [1-dimensional Allen-Cahn trajectory](#figure=Figures/Animations/1d_allen_cahn.gif)
+    - [FOM vs. ROM](#figure=Figures/Animations/1d_allen_cahn.gif)
+    - [Evolution of reduced coefficients over time (reduced trajectory)](#figure=Figures/Animations/1d_rom_reduced_state.gif)
+    - [Evolution of spatial modes over time](#figure=Figures/Animations/1d_rom_mode_contributions.gif)
+- [Images](#folder=Figures/Images)
+  - [2-D reaction diffusion target function plot](#figure=Figures/Images/Nonlinearities/rd_nonlinearity.png)
+  - **[Key Result: 1-D Allen-Cahn target function with learned neural approximation](#figure=Figures/Images/Poster_figures/learned_function_AC.png)**
+  - [Spatial modes, A-C trajactory](#folder=Figures/Images/2D_Allen-Cahn_Spatial_Modes)
+  - [Spatial modes, R-D trajectory](#folder=Figures/Images/Reaction-diffusion_spatial_modes)
+  - [Spatial modes, C-H trajectory](#folder=Figures/Images/Cahn-Hilliard_Spatial_Modes)
 
 ## A Note on Gradient Flows and the Allen-Cahn and Cahn-Hilliard Equations
 
@@ -56,9 +40,6 @@ where $\Omega$ is the spatial domain. Here, the gradient term penalizes rapid ch
 The Allen-Cahn equation is an $L^2-$gradient flow; under the Allen-Cahn equation, $c_t$ is such that $E[c]$ is minimized as much as possible at each time. The Cahn-Hilliard equation is similar, but $c_t$ must preserve mass. The *nonlocal* Cahn-Hilliard equation describes the dissolution of species $A$ and $B$ when they are attached to a polymer, known as a block copolymer. This equation adds a term to the free energy which represents the polymer constraints, giving 
 $$E_{nonlocal}[c] = \int_\Omega \frac {\kappa}{2}|\nabla c|^2 + F(c) + \frac{\sigma}{2}(c - \bar{c})(-\Delta ^{-1})(c-\bar{c})d\Omega,$$
 where $\bar{c}$ is the mean concentration (average mass) and $-\Delta ^{-1}$ is the negative inverse of the Laplacian operator, which is defined on the zero mean subspace in which $c - \bar{c}$ lives. 
-
-
-## More Motivation: Block Copolymers, NSLS II, and the Cahn-Hilliard Equation
 
 ## A Note on Projection-Based Model-Order Reduction
 
