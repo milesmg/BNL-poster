@@ -9,6 +9,10 @@ $^1$Department of Applied Mathematics, Brookhaven National Laboratory, Upton, NY
 ## Figures
 
 - [Animations](#figures)
+  - ### [Key Result: Learned (neural nonlinearity) Allen-Cahn Trajectory on a FOM and ROM](#figure=Figures/Animations/Learned_Allen-Cahn_trajectory.gif)
+    - **Nonlinearity was trained on a ROM in 10 minutes; a similar FOM training took 5 hours**
+    - Galerkin projection with r = 20 spatial points
+    - DEIM hyperreduction, m = 20 DEIM points
   - [Allen-Cahn Trajectory on a FOM and ROM](#figure=Figures/Animations/Allen-Cahn_trajectory.gif)
     - Galerkin projection with r = 20 spatial modes
     - DEIM hyperreduction, m = 20 DEIM points
@@ -18,18 +22,18 @@ $^1$Department of Applied Mathematics, Brookhaven National Laboratory, Upton, NY
   - [Cahn-Hilliard Trajectory on a FOM and ROM](#figure=Figures/Animations/Cahn-Hilliard_Trajectory.gif)
     - Petrov-Galerkin projection with a $(-\Delta)^{-1}$ trial basis, r = 5 spatial modes
     - ECSW hyperreduction, m = 30 maximum non-zero ECSW elements
-<!-- - $\kappa = 0.1$, $\bar{c} = 0.0$ -->
-  - **[Key Result: Learned (neural nonlinearity) Allen-Cahn Trajectory on a FOM and ROM](#figure=Figures/Animations/Learned_Allen-Cahn_trajectory.gif)**
-  - [1-dimensional Allen-Cahn trajectory](#figure=Figures/Animations/1d_allen_cahn.gif)
+  - Here, we inspect the inner workings of a POD-Galerkin ROM; the following three files, as well as the 1-D A-C spatial modes, are from the same trajectory. 
     - [FOM vs. ROM](#figure=Figures/Animations/1d_allen_cahn.gif)
     - [Evolution of reduced coefficients over time (reduced trajectory)](#figure=Figures/Animations/1d_rom_reduced_state.gif)
     - [Evolution of spatial modes over time](#figure=Figures/Animations/1d_rom_mode_contributions.gif)
 - [Images](#folder=Figures/Images)
   - [2-D reaction diffusion target function plot](#figure=Figures/Images/Nonlinearities/rd_nonlinearity.png)
   - **[Key Result: 1-D Allen-Cahn target function with learned neural approximation](#figure=Figures/Images/Poster_figures/learned_function_AC.png)**
+    - See the first Key Result animation above. 
   - [Spatial modes, A-C trajectory](#folder=Figures/Images/2D_Allen-Cahn_Spatial_Modes)
   - [Spatial modes, R-D trajectory](#folder=Figures/Images/Reaction-diffusion_spatial_modes)
   - [Spatial modes, C-H trajectory](#folder=Figures/Images/Cahn-Hilliard_Spatial_Modes)
+  - [1D Spatial modes, A-C trajectory](#folder=Figures/Images/1D_allen-cahn_spatial_modes)
 
 ## A Note on Gradient Flows and the Allen-Cahn and Cahn-Hilliard Equations
 
