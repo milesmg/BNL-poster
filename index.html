@@ -202,7 +202,7 @@
         setView('figures-view');
         image.src = path;
         image.alt = path.split('/').pop();
-        caption.textContent = captions[path] || 'Caption placeholder.';
+        caption.textContent = typeof captions[path] === 'string' ? captions[path] : 'Caption placeholder.';
         if (!dialog.open) dialog.showModal();
       }
       function applyHash() {
