@@ -7,7 +7,6 @@
     <meta name="theme-color" content="#071a35">
     <meta property="og:title" content="Accelerated Neural System Identification">
     <meta property="og:description" content="Poster companion: reduced-order models, hyperreduction, and simulation results.">
-    <meta property="og:image" content="images/social-preview.png">
     <title>Accelerated Neural System Identification</title>
     <style>
       :root {
@@ -67,7 +66,10 @@
       .hero::before {
         position: absolute;
         inset: 0;
-        background: linear-gradient(90deg, rgb(7 26 53 / 98%) 0%, rgb(7 26 53 / 90%) 43%, rgb(7 26 53 / 38%) 100%), url("images/social-preview.png") center / cover;
+        background:
+          radial-gradient(circle at 84% 20%, rgb(6 167 165 / 32%), transparent 22%),
+          radial-gradient(circle at 72% 78%, rgb(239 108 88 / 18%), transparent 22%),
+          linear-gradient(125deg, #071a35 0%, #0d3261 100%);
         content: "";
       }
       .hero-inner { position: relative; padding: clamp(68px, 12vw, 132px) 0 82px; }
@@ -139,7 +141,7 @@
         .header-inner { min-height: 54px; }
         .wordmark { display: none; }
         nav { width: 100%; justify-content: space-between; gap: 15px; }
-        .hero::before { background: linear-gradient(180deg, rgb(7 26 53 / 84%), rgb(7 26 53 / 97%)), url("images/social-preview.png") 63% / auto 100%; }
+        .hero::before { background: linear-gradient(180deg, rgb(7 26 53 / 6%), rgb(7 26 53 / 35%)); }
         .hero-inner { padding: 67px 0 62px; }
         main { padding-top: 42px; }
         .intro, .plot-grid, .animation-grid { grid-template-columns: 1fr; }
