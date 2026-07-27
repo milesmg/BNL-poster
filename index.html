@@ -7,7 +7,7 @@
     <meta name="theme-color" content="#071a35">
     <meta property="og:title" content="Accelerated Neural System Identification">
     <meta property="og:description" content="Poster companion: reduced-order models, hyperreduction, and simulation results.">
-    <meta property="og:image" content="Images/social-preview.png">
+    <meta property="og:image" content="images/social-preview.png">
     <title>Accelerated Neural System Identification</title>
     <style>
       :root {
@@ -67,7 +67,7 @@
       .hero::before {
         position: absolute;
         inset: 0;
-        background: linear-gradient(90deg, rgb(7 26 53 / 98%) 0%, rgb(7 26 53 / 90%) 43%, rgb(7 26 53 / 38%) 100%), url("Images/social-preview.png") center / cover;
+        background: linear-gradient(90deg, rgb(7 26 53 / 98%) 0%, rgb(7 26 53 / 90%) 43%, rgb(7 26 53 / 38%) 100%), url("images/social-preview.png") center / cover;
         content: "";
       }
       .hero-inner { position: relative; padding: clamp(68px, 12vw, 132px) 0 82px; }
@@ -139,7 +139,7 @@
         .header-inner { min-height: 54px; }
         .wordmark { display: none; }
         nav { width: 100%; justify-content: space-between; gap: 15px; }
-        .hero::before { background: linear-gradient(180deg, rgb(7 26 53 / 84%), rgb(7 26 53 / 97%)), url("Images/social-preview.png") 63% / auto 100%; }
+        .hero::before { background: linear-gradient(180deg, rgb(7 26 53 / 84%), rgb(7 26 53 / 97%)), url("images/social-preview.png") 63% / auto 100%; }
         .hero-inner { padding: 67px 0 62px; }
         main { padding-top: 42px; }
         .intro, .plot-grid, .animation-grid { grid-template-columns: 1fr; }
@@ -209,15 +209,15 @@
         </div>
         <div class="plot-grid">
           <figure class="plot">
-            <img src="Images/Poster_figures/FOM_vs_ROM_speedup.png" alt="Comparison of full-order and reduced-order model speeds" loading="lazy">
+            <img src="images/Poster_figures/FOM_vs_ROM_speedup.png" alt="Comparison of full-order and reduced-order model speeds" loading="lazy">
             <figcaption>Full-order versus reduced-order computational cost.</figcaption>
           </figure>
           <figure class="plot">
-            <img src="Images/Poster_figures/curve_fit_speedup.png" alt="Speedup as a function of curve fitting" loading="lazy">
+            <img src="images/Poster_figures/curve_fit_speedup.png" alt="Speedup as a function of curve fitting" loading="lazy">
             <figcaption>Performance gains from the reduced representation.</figcaption>
           </figure>
           <figure class="plot">
-            <img src="Images/Poster_figures/learned_function_AC.png" alt="Learned Allen-Cahn nonlinear function" loading="lazy">
+            <img src="images/Poster_figures/learned_function_AC.png" alt="Learned Allen-Cahn nonlinear function" loading="lazy">
             <figcaption>Learned neural approximation of the Allen–Cahn nonlinearity.</figcaption>
           </figure>
         </div>
@@ -231,19 +231,19 @@
         </div>
         <div class="animation-grid">
           <article class="animation-card">
-            <img src="Animations/Allen-Cahn_trajectory.gif" alt="Animated Allen-Cahn full-order and reduced-order trajectories" loading="lazy">
+            <img src="animations/Allen-Cahn_trajectory.gif" alt="Animated Allen-Cahn full-order and reduced-order trajectories" loading="lazy">
             <div><h3>Allen–Cahn</h3><p>Galerkin projection with 20 spatial modes and DEIM hyperreduction using 20 interpolation points.</p></div>
           </article>
           <article class="animation-card">
-            <img src="Animations/Reaction-Diffusion_trajectory.gif" alt="Animated reaction-diffusion full-order and reduced-order trajectories" loading="lazy">
+            <img src="animations/Reaction-Diffusion_trajectory.gif" alt="Animated reaction-diffusion full-order and reduced-order trajectories" loading="lazy">
             <div><h3>Reaction–diffusion</h3><p>Galerkin projection with DEIM points divided between the two nonlinear components.</p></div>
           </article>
           <article class="animation-card">
-            <img src="Animations/Cahn-Hilliard_Trajectory.gif" alt="Animated Cahn-Hilliard full-order and reduced-order trajectories" loading="lazy">
+            <img src="animations/Cahn-Hilliard_Trajectory.gif" alt="Animated Cahn-Hilliard full-order and reduced-order trajectories" loading="lazy">
             <div><h3>Cahn–Hilliard</h3><p>Petrov–Galerkin projection with five spatial modes and ECSW hyperreduction.</p></div>
           </article>
           <article class="animation-card">
-            <img src="Animations/1d_allen_cahn.gif" alt="Animated one-dimensional Allen-Cahn trajectory" loading="lazy">
+            <img src="animations/1d_allen_cahn.gif" alt="Animated one-dimensional Allen-Cahn trajectory" loading="lazy">
             <div><h3>One-dimensional Allen–Cahn</h3><p>A compact example of the evolving system in reduced coordinates.</p></div>
           </article>
         </div>
