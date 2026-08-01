@@ -41,7 +41,7 @@ Let $c\in [-1,1]^{N^d}$ denote a scalar relative concentration field; that is, e
 $$E[c] = \int_\Omega \frac{\kappa}{2} |\nabla c|^2 + F(c)d\Omega,$$ 
 where $\Omega$ is the spatial domain. Here, the gradient term penalizes rapid changes in concentration; $F$ is the free energy term, often represented by a double well potential $F(c) = \frac{(c^2-1)^2}{4}$
 
-The Allen-Cahn equation is an $L^2-$gradient flow; under the Allen-Cahn equation, $c$ peforms a gradient descent to minimize $E[c]$. This descent happens in the standard $L^2$ space. The Cahn-Hilliard equation is similar, but $c_t$ must preserve mass. The *nonlocal* Cahn-Hilliard equation describes the separation of species $A$ and $B$ when they are attached to a polymer, known as a block copolymer. This equation adds a term to the free energy which represents the polymer constraints, giving 
+The Allen-Cahn equation is an $L^2-$gradient flow; under the Allen-Cahn equation, $c$ peforms a gradient descent to minimize $E[c]$. This descent happens in the standard $L^2$ space. The Cahn-Hilliard equation is similar, but mass transfer must occur via local flux. The *nonlocal* Cahn-Hilliard equation describes the separation of species $A$ and $B$ when they are attached to a polymer, known as a block copolymer. This equation adds a term to the free energy which represents the polymer constraints, giving 
 $$E_{nonlocal}[c] = \int_\Omega \frac {\kappa}{2}|\nabla c|^2 + F(c) + \frac{\sigma}{2}(c - \bar{c})(-\Delta ^{-1})(c-\bar{c})d\Omega,$$
 where $\bar{c}$ is the mean concentration (average mass) and $-\Delta ^{-1}$ is the negative inverse of the Laplacian operator, which is defined on the zero mean subspace in which $c - \bar{c}$ lives. 
 
