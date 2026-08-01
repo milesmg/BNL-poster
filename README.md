@@ -47,7 +47,9 @@ where $\bar{c}$ is the mean concentration (average mass) and $-\Delta ^{-1}$ is 
 
 ## A Note on Projection-Based Model-Order Reduction
 
-As described on the poster, projection-based model order reduction approximates a full state vector $u \in \mathbb R^{N^d}$, where $d$ is the dimension, as a linear combination of $r$ basis elements. In proper orthogonal decomposition (POD), this basis $U$ is chosen from data by taking the first $r$ left singular vectors of a matrix of data snapshots. An initial condition $u_0$ is projected into reduced space via $\tilde{u_0} = U^Tu_0$; a state is projected up from the reduced space to the full space via $U \in R^{N^d \times r}.$ 
+
+Linear projection-based model order reduction approximates a full state vector $u \in \mathbb R^{N^d}$, where $d$ is the dimension, as an element of an $r << N^d$ dimensional vector space. In proper orthogonal decomposition (POD), the basis of this vector space is crafted from data by taking the first $r$ left singular vectors of a matrix of data snapshots. If $U \in R^{N^d \times r}$ is the matrix of these basis elements, an initial condition $u_0$ is projected into reduced space via $\tilde{u_0} = U^Tu_0$; a state is projected up from the reduced space to the full space via $U.$ 
+
 
 How do we evolve our reduced state so that its dynamics respect the dynamics of the full order equation, albeit in reduced form, and so that we can extract the resultant true state at any point? We project our equation down; specifically, if our PDE is of the form
  $$u_t = L(u) \iff u_t - L(u) = 0,$$ 
@@ -55,16 +57,18 @@ How do we evolve our reduced state so that its dynamics respect the dynamics of 
 $$U\tilde{u}_t = L(U \tilde{u}) \iff U\tilde{u}_t - L(U \tilde{u}) = 0$$
 but this equation is over-constrained; we're projecting up from a low dimensional space and making $N^d$ requirements of the result of that projection. Thus, we instead define the residual 
 $$U\tilde{u}_t - L(U \tilde{u}) =: r(\tilde{u}) \in \mathbb R^{N^d}.$$ 
-We can force our residual to be orthogonal to whatever $r-$dimensional space we choose. **Galerkin projection** says: force our residual to be orthogonal to the reduced space, the span of the first $r$ singular vectors of our data matrix $\equiv$ the columns of $U$. That is, enforce $U^Tr(\tilde{u}) = 0$. **Petrov-Galerkin projection** chooses a distinct basis. This may be helpful in the context of the Cahn-Hilliard equation, when we want force our ROM to respect the mass-preserving gradient flow construction of the Cahn-Hilliard equation. <!--The brief sketch shown on the paper describes the process of pre-computing the projected operators of our PDE.--> In the case of the above equation, applying Galerkin projection leads to 
+We can force our residual to be orthogonal to whatever $r-$dimensional space we choose. **Galerkin projection** says: force our residual to be orthogonal to the reduced space, the span of the columns of $U$; that is, enforce $U^Tr(\tilde{u}) = 0$. **Petrov-Galerkin projection** chooses a distinct basis with which to enforce orthogonality. This may be helpful in the context of the Cahn-Hilliard equation, when we want force our ROM to respect the $H^{-1}-$gradient flow construction of the Cahn-Hilliard equation. In the case of the above equation, applying Galerkin projection leads to 
 $$U^TU\tilde{u}_t = U^TL(U(\tilde{u})).$$ 
 If $L$ is linear then we can precompute $\tilde{L} = U^TLU$; if, as in POD, the columns of $U$ are orthonormal, then $U^TU = I$, and we get the reduced differential equation
 $$\tilde{u}_t = \tilde{L}(\tilde{u}). $$
 
+
 ## A Note on Hyperreduction
 
-The two methods of hyperreduction employed in this paper are the **discrete empirical interpolation method (DEIM)** and **energy-conserving sampling and weighting (ECSW)**. Both require function 'snapshots,' evaluations of the function over the course of a trajectory. In the context of system identification, this seems unappealing, but in many cases it may be possible to build these function snapshots from a concatenation of pre-computed trajectories from various positions in parameter space. 
 
-**DEIM** is an approximate-then-project method. Similar to POD, the function $f$ is approximated as a linear combination of basis vectors; this basis is the first $m$ left singular vectors of $F$, the function snapshot matrix. Note that we are not approximating $f(\cdot)$ via a function basis; we're approximating each function evaluation vector $f(x) \in \mathbb R^{N^d}$ as a linear combination of our evaluation basis. We then select $m$ points out of our $N^d-$length state vector, and require that our $m-$dimensional approximation is correct at those $m$ spatial (DEIM) points for all time. If our function snapshot basis is $\Phi$, then this is equivalent to enforcing 
+The two methods of hyperreduction employed in this paper are the **discrete empirical interpolation method** (DEIM) and **energy-conserving sampling and weighting** (ECSW). Both require function 'snapshots,' evaluations of the function over the course of a trajectory. If system identification is the goal, this may be unappealing, but in many cases it may be possible to build these function snapshots from approximating functions, or guesses, which may not need to be similar to the target function. 
+
+**DEIM** is an approximate-then-project method. Similar to POD, the function $f$ is approximated as a linear combination of basis vectors; this basis is the first $m$ left singular vectors of $F$, the function snapshot matrix. Note that we are not approximating $f(\cdot)$ via a function basis; we're approximating each function evaluation vector $f(x) \in \mathbb R^{N^d}$ as a linear combination of our evaluation basis. We then select $m$ points out of our $N^d-$length state vector, and require that our $m-$dimensional approximation is correct at those $m$ spatial points (DEIM points) for all time. If our function snapshot basis is $\Phi$, then this is equivalent to enforcing 
 $$Z_m f(U\tilde{u}) = Z_m \Phi \alpha (\tilde{u}),$$
 where $Z_m$ is the matrix that selects our $m$ points and $\alpha(\tilde{u})$ is the vector of coefficients with which we interpolate our function basis for a given reduced state. Thus, our approximation of $f$ is given by 
 $$\Phi\alpha (\tilde {u}) = \Phi(Z_m \Phi)^{-1}Z_m f(U\tilde{u}),$$
@@ -77,9 +81,9 @@ The choice of DEIM points is nontrivial. In many cases, they are chosen via a gr
 **ECSW** is a project-then-approximate method. It was originally developed for a finite element context; here, we treat each grid point as an element and preserve the standard notation. ECSW computes its approximation of the nonlinearity in reduced space, unlike DEIM, and because of its construction preserves the Lagrangian structure (least-action principle) of certain systems to which it is applied. This makes it particularly appealing in a Cahn-Hilliard context, where we would like to preserve the gradient flow character of the FOM in our ROM. 
 
 Let $U$ denote our Galerkin projector, as above. ECSW is effectively a quadrature method: we would like to approximate the function 
-$$f(u) = \sum_{e \in E} (L^e U)^TL^e f(Uu)$$
+$$f(\tilde{u}) = \sum_{e \in E} (L^e U)^TL^e f(U\tilde{u})$$
 where $L^e$ selects the $e-$th element and $E$ is the set of elements, via 
-$$f(u) \approx \tilde{f}(u) =  \sum_{e \in \tilde{E} \subset E} \xi_e (L^e U)^TL^e f(Uu).$$ 
-Enforcing the nonnegativity of the $\{\xi_e\}$ makes ECSW energy conserving in the right contexts. We let $\xi$ denote the vector of these 'quadrature weights.' Let $G$ denote a matrix of per-element reduced force snapshots generated from data; let $b$ denote the matrix of their sums across elements (that is, the matrix of reduced force snapshots). Then the offline 'training' of ECSW, analogous to the SVD and greedy evaluation point selection of the DEIM algorithm, involves adjusting $\xi$ to minimize 
+$$f(\tilde{u}) \approx \tilde{f}(\tilde{u}) =  \sum_{e \in \tilde{E} \subset E} \xi_e (L^e U)^TL^e f(U\tilde{u}).$$ 
+Enforcing the nonnegativity of the $\{\xi_e\}$ makes ECSW energy conserving in the right contexts. We let $\xi$ denote the vector of these `quadrature weights.' Let $G$ denote a matrix of per-element reduced force snapshots generated from data; let $b$ denote the matrix of their sums across elements (that is, the matrix of reduced force snapshots). Then the offline `training' of ECSW, analogous to the SVD and greedy evaluation point selection of the DEIM algorithm, involves adjusting $\xi$ to minimize 
 $$||G\xi - b||$$
  while keeping all elements nonnegative, and keeping as many zero as possible. 
